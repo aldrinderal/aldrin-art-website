@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aldrin Art – Portrait Artist</title>
+  <link rel="icon" href="IMG_20260210_202242.png">
+  <link rel="preload" as="image" href="IMG_20241207_172246.jpg">
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet"/>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+
+  <script>
+  
+  const slides = slider.children;
+  let index = 0;
+
+  function showSlide() {
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  function nextSlide() {
+    index = (index + 1) % slides.length;
+    showSlide();
+  }
+
+  function prevSlide() {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide();
+  }
+
+  // Auto slide (optional)
+  setInterval(nextSlide, 8000);
+</script>
+
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "background-light": "#f7f7f7",
+            "background-dark": "#191919",
+          },
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body { min-height: 100vh; }
+  </style>
+
+
+
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 dark:text-white">
+
+<!-- NAVBAR -->
+<header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-gray-700">
+  <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+
+    <h1 class="font-extrabold tracking-widest text-xl">ALDRIN ART</h1>
+
+    <!-- Hamburger Button (mobile only) -->
+    <button id="menuBtn" class="md:hidden text-2xl">
+      ☰
+    </button>
+
+    <!-- Desktop Menu -->
+    <nav class="hidden md:flex space-x-4 text-sm" id="menu">
+      <a href="#services" class="hover:text-gray-400">Achievement</a>
+      <a href="#portfolio" class="hover:text-gray-400">Gallery</a>
+      <a href="#about" class="hover:text-gray-400">About</a>
+      <a href="#contact-info" class="hover:text-gray-400">Contact</a>
+    </nav>
+  </div>
+
+  
+  <!-- Mobile Menu -->
+<!-- Mobile Menu -->
+<div id="mobileMenu"
+     class="md:hidden bg-black border-t border-gray-700 overflow-hidden max-h-0 transition-all duration-500 ease-in-out">
+  <nav class="flex flex-col text-center p-4 space-y-3">
+    <a href="#services" class="hover:text-gray-400">Achievement</a>
+    <a href="#portfolio" class="hover:text-gray-400">Gallery</a>
+    <a href="#about" class="hover:text-gray-400">About</a>
+    <a href="#contact-info" class="hover:text-gray-400">Contact</a>
+  </nav>
+</div>
+
+
+</header>
+
+
+<!-- HERO -->
+<section id="hero"
+  class="relative h-[90vh] flex items-end p-8 overflow-hidden">
+
+  <img src="IMG_20241207_172246.jpg"
+       class="absolute inset-0 w-full h-full object-cover"
+       loading="eager"
+       fetchpriority="high">
+
+  <div class="absolute inset-0 bg-gradient-to-t from-black/90 to-black/20"></div>
+
+  <div class="relative z-10 max-w-xl">
+    <span class="px-3 py-1 bg-white/20 text-xs rounded-full">Open for Commissions</span>
+    <h2 class="text-4xl font-bold mt-4">Capturing Souls in Graphite</h2>
+    <p class="mt-2 text-gray-300">Hand-drawn portraits turned into timeless masterpieces.</p>
+    <a href="#contact"
+       class="inline-block mt-4 px-6 py-2 bg-white text-black rounded-full font-bold hover:scale-105 transition">
+       Commission Now
+    </a>
+  </div>
+</section>
+
+<!-- Pricing Section -->
+<section id="pricing" class="py-20 bg-[#0b0b0b] text-white">
+
+  <div class="max-w-6xl mx-auto px-6">
+
+    <!-- Price Artwork -->
+    <div class="relative max-w-4xl mx-auto group">
+
+      <!-- Dark soft glow/shadow behind artwork -->
+      <div class="absolute inset-4
+                  bg-black/80
+                  blur-3xl
+                  translate-y-8
+                  rounded-2xl">
+      </div>
+
+      <!-- Image frame -->
+      <div class="relative
+                  bg-[#111111]
+                  p-3 md:p-5
+                  rounded-xl
+                  border border-white/10
+                  shadow-[0_25px_80px_rgba(0,0,0,0.7)]
+                  transition-all duration-500
+                  group-hover:-translate-y-2
+                  group-hover:shadow-[0_30px_100px_rgba(0,0,0,0.9)]">
+
+        <!-- Your pricing image -->
+        <img
+          src="file_00000000eae881f58bf8731ed4ae44b9.png"
+          alt="Aldrin Art portrait commission pricing"
+          class="w-full h-auto rounded-lg
+                 object-contain
+                 transition-transform duration-700
+                 group-hover:scale-[1.015]"
+        >
+
+      </div>
+
+      <!-- Small handmade-style label -->
+      <div class="absolute -bottom-5 left-1/2 -translate-x-1/2
+                  bg-white text-black
+                  px-5 py-2
+                  rounded-full
+                  text-xs tracking-widest uppercase
+                  shadow-xl
+                  whitespace-nowrap">
+        Hand-drawn • Made with Emotion
+      </div>
+
+    </div>
+
+
+    <!-- Bottom CTA -->
+    <div class="text-center mt-16">
+
+      <p class="text-sm text-white/50 mb-4">
+        Have a special photo in mind?
+      </p>
+
+      <a
+        href="#contact"
+        class="inline-flex items-center gap-2
+               px-7 py-3
+               bg-white text-black
+               rounded-full
+               font-semibold
+               transition-all duration-300
+               hover:scale-105
+               hover:bg-gray-200
+               hover:shadow-xl"
+      >
+        Commission Your Portrait
+        <span class="text-lg">→</span>
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="py-16 max-w-6xl mx-auto px-6">
+  <h2 class="text-3xl font-bold text-center mb-10">Achievement</h2>
+  <div class="grid md:grid-cols-3 gap-6">
+    
+
+<div class="max-w-xl mx-auto bg-black border border-neutral-800 rounded-2xl p-6 shadow-xl hover:scale-105 transition duration-300">
+  
+  <h3 class="text-lg font-semibold text-white mb-2">
+    District Level Achievement
+  </h3>
+
+  <p class="text-neutral-400 text-sm leading-relaxed">
+    Awarded <span class="font-medium text-white">3rd Prize</span> in the
+    <span class="font-medium text-white">District Level Drawing Competition</span>
+    conducted by the
+    <span class="font-medium text-white">Tirunelveli Science Centre</span>.
+  </p>
+
+  <div class="mt-5">
+    <a href="https://www.bharathmontessorischool.com/assets/pdf/our-summer-term-circular.pdf"
+       target="_blank"
+       class="inline-flex items-center px-5 py-2.5 rounded-lg bg-white text-black text-sm font-medium hover:bg-neutral-200 transition">
+      Click to View Proof
+    </a>
+  </div>
+
+</div>
+
+<div class="max-w-xl mx-auto bg-black border border-neutral-800 rounded-2xl p-6 shadow-xl hover:scale-105 transition duration-300">
+  
+  <h3 class="text-lg font-semibold text-white mb-2">
+    State Level Selection
+  </h3>
+
+  <p class="text-neutral-400 text-sm leading-relaxed">
+    Selected under the State Level category by the Bureau of Energy Efficiency (BEE) as part of the
+    “List of 50 Selected – Group A (Tamil Nadu)”.
+  </p>
+
+  <p class="text-neutral-300 text-sm mt-3 leading-relaxed">
+    The competition was conducted at 
+    <span class="font-semibold text-white">
+      Anna University Regional Campus, Chennai
+    </span>.
+  </p>
+
+  <div class="mt-5">
+    <a href="https://beeindia.gov.in/sites/default/files/TN%20Grp%20A.pdf"
+       target="_blank"
+       class="inline-flex items-center px-5 py-2.5 rounded-lg bg-white text-black text-sm font-medium hover:bg-neutral-200 transition">
+      Click to View Proof
+    </a>
+  </div>
+
+</div>
+
+
+
+
+   <div class="max-w-xl mx-auto bg-black border border-neutral-800 rounded-2xl p-6 shadow-xl hover:scale-105 transition duration-300">
+  
+  <h3 class="text-lg font-semibold text-white mb-2">
+    National Level Achievement
+  </h3>
+
+  <p class="text-neutral-400 text-sm leading-relaxed">
+    Awarded <span class="font-semibold text-white">2nd Prize</span> in the
+    <span class="font-medium text-white">National Level Drawing Contest</span>
+    organized by the
+    <span class="font-semibold text-white">Lunar Lingua Government Company</span>.
+  </p>
+
+  <div class="mt-5">
+    <a href="https://lunarlingua.com/gallery/"
+       target="_blank"
+       class="inline-flex items-center px-5 py-2.5 rounded-lg bg-white text-black text-sm font-medium hover:bg-neutral-200 transition">
+      Click to View Proof
+    </a>
+  </div>
+
+</div>
+
+
+</div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="py-16 bg-black/90">
+  <h2 class="text-3xl font-bold text-center mb-10">Achievement Gallery</h2>
+
+  <div class="relative max-w-4xl mx-auto px-6 overflow-hidden">
+    
+    <!-- Slider Track -->
+    <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+      <img src="IMG_20260209_190226.jpg.jpeg" class="w-full object-cover rounded-xl" />
+      <img src="IMG_20260209_185207.jpg (1).jpeg" class="w-full object-cover rounded-xl" />
+      <img src="IMG_20260924_001837.jpg.jpeg" class="w-full object-cover rounded-xl" />
+      <img src="SKM_C251i26011318561.jpg" class="w-full flex-shrink-0 rounded-xl" />
+      <img src="IMG_20260209_213003.png" class="w-full object-cover rounded-xl" />
+      <img src="IMG_20260924_001529.jpg.jpeg" class="w-full object-cover rounded-xl" />
+      <img src="HHN08490.jpg" class="w-full flex-shrink-0 rounded-xl" />
+      
+    </div>
+
+
+    
+
+
+    <!-- Buttons -->
+    <button onclick="prevSlide()"
+      class="absolute left-2 top-1/2 -translate-y-1/2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/40">
+      ❮
+    </button>
+
+    <button onclick="nextSlide()"
+      class="absolute right-2 top-1/2 -translate-y-1/2 bg-white/20 px-3 py-2 rounded-full hover:bg-white/40">
+      ❯
+    </button>
+  </div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  
+  const menuLinks = mobileMenu.querySelectorAll("a");
+
+  let isOpen = false;
+
+  menuBtn.addEventListener("click", () => {
+    if (!isOpen) {
+      mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+      isOpen = true;
+    } else {
+      mobileMenu.style.maxHeight = "0px";
+      isOpen = false;
+    }
+  });
+
+  menuLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      mobileMenu.style.maxHeight = "0px";
+      isOpen = false;
+    });
+  });
+});
+</script>
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const slider = document.getElementById("slider");
+  const slides = slider.children;
+  let index = 0;
+
+  let startX = 0;
+  let endX = 0;
+
+  function showSlide() {
+    slider.style.transform = `translateX(-${index * 100}%)`;
+  }
+
+  window.nextSlide = function () {
+    index = (index + 1) % slides.length;
+    showSlide();
+  };
+
+  window.prevSlide = function () {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide();
+  };
+
+  // Auto slide
+  setInterval(() => {
+    nextSlide();
+  }, 10000);
+
+  // TOUCH SWIPE SUPPORT
+  slider.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  slider.addEventListener("touchend", (e) => {
+    endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+
+    if (diff > 50) {
+      nextSlide(); // swipe left
+    } else if (diff < -50) {
+      prevSlide(); // swipe right
+    }
+  });
+});
+</script>
+
+
+
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+
+  menuBtn.addEventListener("click", () => {
+    
+  });
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.getElementById("artTrack");
+  const carousel = document.getElementById("artCarousel");
+
+  let startX = 0;
+  let currentTranslate = 0;
+  const cardWidth = 272; // same as before
+
+  carousel.addEventListener("touchstart", (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+  carousel.addEventListener("touchend", (e) => {
+    let endX = e.changedTouches[0].clientX;
+    let diff = startX - endX;
+
+    if (diff > 50) {
+      // swipe left
+      currentTranslate -= cardWidth;
+    } else if (diff < -50) {
+      // swipe right
+      currentTranslate += cardWidth;
+    }
+
+    const maxTranslate = -(track.scrollWidth - carousel.clientWidth);
+
+    if (currentTranslate > 0) currentTranslate = 0;
+    if (currentTranslate < maxTranslate) currentTranslate = maxTranslate;
+
+    track.style.transform = `translateX(${currentTranslate}px)`;
+  });
+});
+</script>
+
+
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const track = document.getElementById("artTrack");
+  const next = document.getElementById("artNext");
+  const prev = document.getElementById("artPrev");
+
+  const cardWidth = 272; // 256px (w-64) + gap
+  let position = 0;
+
+  next.addEventListener("click", () => {
+    position -= cardWidth;
+    if (Math.abs(position) >= track.scrollWidth - track.parentElement.clientWidth) {
+      position = 0;
+    }
+    track.style.transform = `translateX(${position}px)`;
+  });
+
+  prev.addEventListener("click", () => {
+    position += cardWidth;
+    if (position > 0) {
+      position = -(track.scrollWidth - track.parentElement.clientWidth);
+    }
+    track.style.transform = `translateX(${position}px)`;
+  });
+});
+</script>
+
+<script>
+window.addEventListener("load", () => {
+  document.getElementById("hero").classList.remove("opacity-0");
+  document.getElementById("hero").classList.add("opacity-100");
+});
+</script>
+
+
+</section>
+
+
+
+<!-- ARTWORK GALLERY -->
+<section id="artwork" class="py-16 bg-background-dark">
+  <h2 class="text-3xl font-bold text-center mb-6">Artwork Gallery</h2>
+
+  <!-- Desktop Grid -->
+  <div class="hidden md:grid max-w-6xl mx-auto px-6 grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="IMG_20250213_231753 (2) (1).jpg.jpeg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="IMG_3592.JPG" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="InShot_20260924_185941365.jpg.jpeg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="IMG_20240802_140955 (1).jpg.jpeg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="IMG_20250129_155814.jpg.jpeg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="InShot_20240625_014630726.jpg.jpeg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="IMG_20241207_172246.jpg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+    <div class="aspect-[3/4] overflow-hidden rounded-xl">
+      <img src="InShot_20240523_002236646.jpg.jpeg" class="w-full h-full object-cover hover:scale-110 transition" />
+    </div>
+  </div>
+
+ <!-- Mobile Carousel -->
+<div class="md:hidden relative px-4">
+
+  <!-- Left Arrow -->
+  <button id="artPrev"
+    class="absolute left-1 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur px-3 py-2 rounded-full z-10">
+    ❮
+  </button>
+
+  <!-- Right Arrow -->
+  <button id="artNext"
+    class="absolute right-1 top-1/2 -translate-y-1/2 bg-white/20 backdrop-blur px-3 py-2 rounded-full z-10">
+    ❯
+  </button>
+
+  <div id="artCarousel" class="overflow-hidden">
+    <div id="artTrack" class="flex gap-4 transition-transform duration-500 ease-in-out">
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="IMG_20250213_231753 (2) (1).jpg.jpeg" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="IMG_3592.JPG" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="InShot_20260924_185941365.jpg.jpeg" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="IMG_20240802_140955 (1).jpg.jpeg" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="IMG_20250129_155814.jpg.jpeg" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="InShot_20240625_014630726.jpg.jpeg" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="IMG_20241207_172246.jpg" class="w-full h-full object-cover" />
+      </div>
+
+      <div class="w-64 aspect-[3/4] flex-shrink-0 overflow-hidden rounded-xl">
+        <img src="InShot_20240523_002236646.jpg.jpeg" class="w-full h-full object-cover" />
+      </div>
+
+      
+
+  </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+
+  </div>
+</section>
+
+
+
+
+<!-- ABOUT -->
+<section id="about" class="py-20 max-w-4xl mx-auto px-6 text-center">
+
+  <h2 class="text-3xl font-bold mb-4">About</h2>
+  <!-- Profile Photo -->
+  <div class="flex justify-center mb-6">
+    <img src="IMG_20251222_012029_909.webp"
+         alt="Aldrin Deral – Portrait Artist"
+         class="w-36 h-36 rounded-full object-cover border-4 border-gray-300 shadow-lg">
+  </div>
+
+ <p class="text-gray-400 leading-relaxed">
+  I am <span class="text-white font-semibold"> Aldrin Deral A</span>, a portrait artist from Tenkasi, Tamil Nadu, currently pursuing a degree in Engineering.
+</p>
+
+<p class="text-gray-400 leading-relaxed mt-4">
+  My passion for art began during my school years and gradually evolved from a hobby into a dedicated artistic pursuit, with portrait drawing becoming my primary focus.
+</p>
+
+<p class="text-gray-400 leading-relaxed mt-4">
+  I have participated in numerous art competitions and achieved recognition at higher levels, including selection at the
+  <span class="text-white font-semibold">State Level Drawing Competition</span> conducted at
+  <span class="text-white font-semibold">Anna University, Chennai.</span>
+</p>
+
+<p class="text-gray-400 leading-relaxed mt-4">
+  My work centers on realistic portrait art, where I aim to capture emotion, personality, and fine detail in every piece.
+  Each portrait is carefully hand-drawn to transform meaningful moments into timeless artworks.
+</p>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+<!-- CONTACT -->
+<section id="contact" class="relative py-24 bg-[#0b0b0b] text-white overflow-hidden">
+  <!-- Subtle ambient glow background -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-white/[0.02] rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="relative max-w-4xl mx-auto px-6">
+    <!-- Header -->
+    <div class="text-center mb-10">
+     
+      <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-white mb-3">Commission a Portrait</h2>
+      <p class="text-neutral-500 text-sm md:text-base max-w-md mx-auto">
+        Please fill in the details below to request your custom artwork.
+      </p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="relative max-w-2xl mx-auto">
+      <div class="relative bg-[#111111] border border-white/10 rounded-2xl p-6 sm:p-10 shadow-[0_25px_80px_rgba(0,0,0,0.8)]">
+        <form id="commissionForm" class="space-y-6">
+
+          <!-- Name & Email -->
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                 Full Name
+              </label>
+              <input type="text" name="name" required placeholder="Aldrin "
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white hover:border-neutral-700 transition duration-200" />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                 Email Address
+              </label>
+              <input type="email" name="email" required placeholder="aldrin@example.com"
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white hover:border-neutral-700 transition duration-200" />
+            </div>
+          </div>
+
+          <!-- Mobile Number -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+              Mobile Number
+            </label>
+            <div class="flex rounded-xl border border-neutral-800 focus-within:border-white focus-within:ring-1 focus-within:ring-white overflow-hidden bg-black/60 hover:border-neutral-700 transition duration-200">
+              <span class="flex items-center gap-2 px-3.5 bg-neutral-900 border-r border-neutral-800 text-neutral-300 text-sm font-medium select-none">
+                <img src="https://flagcdn.com/w20/in.png" alt="India" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" />
+                +91
+              </span>
+              <input type="tel" name="phone" id="phoneInput" maxlength="10" required placeholder="Enter 10-digit number"
+                class="w-full px-4 py-3 bg-transparent text-white placeholder-neutral-600 text-sm outline-none" />
+            </div>
+          </div>
+
+          <!-- Size & Drawing Type -->
+          <div class="grid md:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                 Portrait Size
+              </label>
+              <select name="size" required
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white hover:border-neutral-700 transition duration-200 cursor-pointer">
+                <option value="" disabled selected class="bg-[#141414] text-neutral-400">Select Portrait Size</option>
+                <option value="A4" class="bg-[#141414] text-white">A4</option>
+                <option value="A3" class="bg-[#141414] text-white">A3</option>
+                <option value="8×10" class="bg-[#141414] text-white">8×10</option>
+                <option value="10×12" class="bg-[#141414] text-white">10×12</option>
+                <option value="12×16" class="bg-[#141414] text-white">12×16</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+                 Drawing Type
+              </label>
+              <select name="type" required
+                class="w-full px-4 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white hover:border-neutral-700 transition duration-200 cursor-pointer">
+                <option value="" disabled selected class="bg-[#141414] text-neutral-400">Select Drawing Type</option>
+                <option value="Pencil Portrait" class="bg-[#141414] text-white">Pencil Portrait</option>
+                <option value="Charcoal" class="bg-[#141414] text-white">Charcoal</option>
+                <option value="Black & White" class="bg-[#141414] text-white">Black & White</option>
+                <option value="Colored Pencil" class="bg-[#141414] text-white">Colored Pencil</option>
+                <option value="Realistic Sketch" class="bg-[#141414] text-white">Realistic Sketch</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Reference Image Upload (Optional but Recommended) -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400">
+                Reference Photo <span class="text-neutral-500 font-normal lowercase">(optional, max 5MB)</span>
+              </label>
+              <span id="fileSizeHint" class="text-[11px] text-neutral-500">JPG, PNG, WebP</span>
+            </div>
+
+            <!-- Upload Area Box -->
+            <div id="dropZone" class="relative group border border-dashed border-neutral-800 hover:border-neutral-600 rounded-xl p-5 text-center bg-black/40 transition-colors cursor-pointer">
+              <input type="file" id="referenceImage" name="referenceImage" accept="image/jpeg,image/png,image/webp,image/jpg" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
+              
+              <div id="uploadPrompt" class="space-y-2">
+                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto text-neutral-400 group-hover:text-white transition">
+                  <i class="fas fa-cloud-upload-alt text-lg"></i>
+                </div>
+                <p class="text-xs text-neutral-300 font-medium">Click or drag & drop reference photo here</p>
+                <p class="text-[11px] text-neutral-500">We'll draw your portrait based on this image</p>
+              </div>
+
+              <!-- Image Preview Container (Hidden by default) -->
+              <div id="previewContainer" class="hidden flex items-center justify-between gap-4 p-2 bg-[#181818] rounded-lg border border-neutral-700/60 text-left">
+                <div class="flex items-center gap-3 overflow-hidden">
+                  <img id="imagePreview" src="" alt="Reference Preview" class="w-12 h-12 rounded object-cover border border-neutral-700 flex-shrink-0" />
+                  <div class="overflow-hidden">
+                    <p id="previewFileName" class="text-xs text-white font-medium truncate"></p>
+                    <p id="previewFileSize" class="text-[10px] text-neutral-400"></p>
+                  </div>
+                </div>
+                <button type="button" id="removeImageBtn" class="z-20 text-neutral-400 hover:text-red-400 text-xs px-2.5 py-1.5 rounded hover:bg-white/5 transition flex-shrink-0">
+                  <i class="fas fa-times mr-1"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+              Portrait Description
+            </label>
+            <textarea name="description" rows="4" placeholder="Mention any specific requests, single/couple portrait details, background preferences, or deadline..."
+              class="w-full px-4 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white hover:border-neutral-700 transition duration-200"></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" id="submitBtn"
+            class="w-full py-3.5 px-6 rounded-full font-bold bg-white text-black hover:bg-neutral-200 active:scale-[0.99] hover:scale-[1.01] transition-all duration-300 shadow-xl flex items-center justify-center gap-2 text-sm tracking-wide group disabled:opacity-50 disabled:cursor-not-allowed">
+            <span id="btnText">Submit Commission Request</span>
+            <span id="btnIcon" class="text-base transition-transform duration-300 group-hover:translate-x-1">→</span>
+            <span id="btnSpinner" class="hidden animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></span>
+          </button>
+
+          <!-- Form Message Status -->
+          <div id="formMsg" class="text-center text-sm font-medium empty:hidden transition-all duration-300"></div>
+
+          <!-- Trust Note -->
+          <div class="flex items-center justify-center gap-2 text-xs text-neutral-500 pt-1">
+            <span>Your information is strictly private and only used to discuss your portrait.</span>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-background-dark border-t border-gray-800">
+  <div class="max-w-6xl mx-auto px-6 py-10 text-center">
+
+    <!-- Brand -->
+    <h3 class="text-xl font-bold tracking-widest text-white">ALDRIN ART</h3>
+    <p class="text-gray-400 mt-1">Professional Portrait Artist</p>
+
+    <!-- Divider -->
+    <div class="w-24 h-[2px] bg-gray-600 mx-auto my-4 rounded-full"></div>
+
+    <!-- Contact Info -->
+    <div id="contact-info" class="space-y-1 text-sm text-gray-400">
+      <p>
+         <a href="mailto:aldrinderal@gmail.com" class="hover:text-white transition">
+          aldrinderal@gmail.com
+        </a>
+      </p>
+      <p> Tamil Nadu, India</p>
+    </div>
+
+    <!-- Social Icons -->
+    <div class="flex justify-center gap-6 mt-6 text-xl">
+      <a href="https://www.instagram.com/aldrin_d5/" target="_blank"
+         class="hover:text-pink-500 hover:scale-125 transition">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://www.facebook.com/aldrin.deral.2025" target="_blank"
+         class="hover:text-blue-500 hover:scale-125 transition">
+        <i class="fab fa-facebook"></i>
+      </a>
+      <a href="https://pin.it/MucNQUcN5" target="_blank"
+         class="hover:text-red-500 hover:scale-125 transition">
+        <i class="fab fa-pinterest"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/aldrinderal15/" target="_blank"
+         class="hover:text-blue-400 hover:scale-125 transition">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </div>
+
+    <!-- Copyright & Admin Link -->
+    <p class="text-gray-500 text-xs mt-8">
+      © 2026 Aldrin Art. All Rights Reserved.
+    </p>
+    
+
+  </div>
+</footer>
+
+<!-- BACKEND API SUBMISSION SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("commissionForm");
+  const formMsg = document.getElementById("formMsg");
+  const submitBtn = document.getElementById("submitBtn");
+  const btnText = document.getElementById("btnText");
+  const btnIcon = document.getElementById("btnIcon");
+  const btnSpinner = document.getElementById("btnSpinner");
+
+  // File Upload Elements
+  const fileInput = document.getElementById("referenceImage");
+  const uploadPrompt = document.getElementById("uploadPrompt");
+  const previewContainer = document.getElementById("previewContainer");
+  const imagePreview = document.getElementById("imagePreview");
+  const previewFileName = document.getElementById("previewFileName");
+  const previewFileSize = document.getElementById("previewFileSize");
+  const removeImageBtn = document.getElementById("removeImageBtn");
+
+  // Handle Image Selection and Preview
+  if (fileInput) {
+    fileInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) {
+        resetImagePreview();
+        return;
+      }
+
+      // Check max size: 5MB
+      const maxBytes = 5 * 1024 * 1024;
+      if (file.size > maxBytes) {
+        formMsg.innerHTML = `
+          <div class="p-3 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300 text-xs">
+            ⚠️ Reference photo is larger than 5MB (${(file.size / (1024 * 1024)).toFixed(1)}MB). Please choose a smaller image.
+          </div>`;
+        resetImagePreview();
+        return;
+      }
+
+      // Check valid file types
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+      if (!allowedTypes.includes(file.mimetype || file.type)) {
+        formMsg.innerHTML = `
+          <div class="p-3 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300 text-xs">
+            ⚠️ Unsupported image format. Please upload JPG, PNG, or WebP.
+          </div>`;
+        resetImagePreview();
+        return;
+      }
+
+      // Clear any previous error
+      formMsg.innerHTML = "";
+
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        imagePreview.src = event.target.result;
+        previewFileName.textContent = file.name;
+        previewFileSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+        uploadPrompt.classList.add("hidden");
+        previewContainer.classList.remove("hidden");
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Remove Selected Image
+    removeImageBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      resetImagePreview();
+    });
+  }
+
+  function resetImagePreview() {
+    if (fileInput) fileInput.value = "";
+    if (imagePreview) imagePreview.src = "";
+    if (previewFileName) previewFileName.textContent = "";
+    if (previewFileSize) previewFileSize.textContent = "";
+    if (uploadPrompt) uploadPrompt.classList.remove("hidden");
+    if (previewContainer) previewContainer.classList.add("hidden");
+  }
+
+  // Handle Form Submit via Fetch to Backend API
+  if (form) {
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      // Clear previous message
+      formMsg.innerHTML = "";
+
+      // Basic client validation
+      const phoneVal = (form.phone ? form.phone.value : "").trim();
+      if (phoneVal.length < 7) {
+        formMsg.innerHTML = `
+          <div class="p-3 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300 text-xs">
+            Please enter a valid phone / mobile number.
+          </div>`;
+        return;
+      }
+
+      // Set Loading State
+      submitBtn.disabled = true;
+      btnText.textContent = "Submitting your commission...";
+      btnIcon.classList.add("hidden");
+      btnSpinner.classList.remove("hidden");
+
+      try {
+        // Collect FormData including file without setting multipart Content-Type header manually
+        const formData = new FormData(form);
+
+        // API Endpoint (relative path works for localhost and production)
+        const response = await fetch("/api/commissions", {
+          method: "POST",
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          // Success Feedback
+          const commissionId = result.commissionId || "Confirmed";
+          formMsg.innerHTML = `
+            <div class="text-green-200 text-left space-y-1">
+    <p class="font-bold flex items-center gap-2">
+        <i class="fas fa-check-circle text-green-400"></i>
+        Commission Request Sent Successfully!
+    </p>
+             
+              
+            </div>`;
+
+          // Reset Form and file preview
+          form.reset();
+          resetImagePreview();
+
+          // Smooth scroll to message
+          formMsg.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          // Error response from server
+          const errorText = result.message || "Failed to submit commission. Please try again.";
+          formMsg.innerHTML = `
+            <div class="p-3 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300 text-xs text-left">
+              <span class="font-bold">Error:</span> ${errorText}
+            </div>`;
+        }
+      } catch (err) {
+        console.error("Commission submission error:", err);
+        formMsg.innerHTML = `
+          <div class="p-3 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300 text-xs text-left">
+            <span class="font-bold">Connection Error:</span> Could not connect to the server. Please check your internet connection or verify the server is running.
+          </div>`;
+      } finally {
+        // Restore Submit Button
+        submitBtn.disabled = false;
+        btnText.textContent = "Submit Commission Request";
+        btnIcon.classList.remove("hidden");
+        btnSpinner.classList.add("hidden");
+      }
+    });
+  }
+});
+</script>
+
+
+
+</body>
+</html>

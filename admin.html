@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard – Aldrin Art</title>
+  <link rel="icon" href="IMG_20260210_202242.png">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ["Plus Jakarta Sans", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b0b0b;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #111111; }
+    ::-webkit-scrollbar-thumb { background: #333333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555555; }
+  </style>
+</head>
+
+<body class="bg-[#0b0b0b] text-neutral-100 flex flex-col min-h-screen antialiased">
+
+  <!-- ============================================================== -->
+  <!-- 1. LOGIN VIEW (Shown when unauthenticated) -->
+  <!-- ============================================================== -->
+  <div id="loginView" class="flex-1 flex items-center justify-center p-6 relative">
+    <!-- Ambient glow behind card -->
+    <div class="absolute w-[450px] h-[450px] bg-white/[0.03] rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="relative w-full max-w-md bg-[#111111] border border-white/10 rounded-2xl p-8 sm:p-10 shadow-[0_25px_80px_rgba(0,0,0,0.9)]">
+      
+      <div class="text-center mb-8">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] uppercase tracking-widest text-neutral-400 mb-3">
+          <i class="fas fa-shield-alt text-[10px]"></i> Secure Admin Portal
+        </span>
+        <h1 class="text-2xl font-bold tracking-wider text-white">ALDRIN ART</h1>
+        <p class="text-neutral-400 text-xs mt-1">Portrait Commission Management</p>
+      </div>
+
+      <!-- Login Error Alert -->
+      <div id="loginError" class="hidden mb-6 p-3 rounded-xl bg-red-950/70 border border-red-800/80 text-red-300 text-xs flex items-center gap-2">
+        <i class="fas fa-exclamation-circle flex-shrink-0"></i>
+        <span id="loginErrorText">Invalid credentials.</span>
+      </div>
+
+      <form id="loginForm" class="space-y-5">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+            Administrator Username
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500 text-sm">
+              <i class="far fa-user"></i>
+            </span>
+            <input type="text" id="username" required autocomplete="username" placeholder="admin"
+              class="w-full pl-10 pr-4 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+            Password
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-neutral-500 text-sm">
+              <i class="fas fa-lock"></i>
+            </span>
+            <input type="password" id="password" required autocomplete="current-password" placeholder="••••••••"
+              class="w-full pl-10 pr-10 py-3 rounded-xl bg-black/60 border border-neutral-800 text-white placeholder-neutral-600 text-sm focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition" />
+            <button type="button" id="togglePasswordBtn" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-neutral-500 hover:text-white transition">
+              <i class="far fa-eye text-sm" id="eyeIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="loginSubmitBtn"
+          class="w-full py-3.5 px-6 rounded-full font-bold bg-white text-black hover:bg-neutral-200 active:scale-[0.99] transition duration-200 shadow-xl flex items-center justify-center gap-2 text-sm tracking-wide mt-2">
+          <span id="loginBtnText">Sign In to Dashboard</span>
+          <span id="loginSpinner" class="hidden animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></span>
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <a href="/" class="text-xs text-neutral-500 hover:text-neutral-300 transition">
+          <i class="fas fa-arrow-left mr-1"></i> Back to Main Website
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 2. MAIN DASHBOARD VIEW (Shown when authenticated) -->
+  <!-- ============================================================== -->
+  <div id="dashboardView" class="hidden flex-1 flex flex-col">
+
+    <!-- Top Admin Bar -->
+    <header class="sticky top-0 z-40 bg-[#0f0f0f]/95 backdrop-blur-md border-b border-white/10 px-6 py-4">
+      <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
+        
+        <div class="flex items-center gap-4">
+          <h1 class="text-lg font-bold tracking-widest text-white">ALDRIN ART</h1>
+          <span class="text-xs px-2.5 py-0.5 rounded-full bg-white/10 text-neutral-300 font-medium">Commission Desk</span>
+          <span id="systemStatusBadge" class="hidden sm:inline-flex items-center gap-1.5 text-[11px] text-green-400 bg-green-950/60 border border-green-800/60 px-2 py-0.5 rounded-full">
+            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span> System Online
+          </span>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="/" target="_blank" class="text-xs text-neutral-400 hover:text-white px-3 py-1.5 rounded-lg border border-neutral-800 hover:border-neutral-700 transition flex items-center gap-1.5">
+            <i class="fas fa-external-link-alt text-[10px]"></i> View Site
+          </a>
+          <button id="logoutBtn" class="text-xs bg-red-950/40 hover:bg-red-900/60 text-red-300 border border-red-800/60 px-3.5 py-1.5 rounded-lg transition flex items-center gap-1.5">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-6 space-y-6">
+
+      <!-- Metrics Row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        
+        <div class="bg-[#121212] border border-white/10 rounded-2xl p-5 shadow-lg">
+          <div class="flex justify-between items-center text-neutral-400 text-xs mb-2">
+            <span>Total Requests</span>
+            <i class="fas fa-paint-brush text-neutral-500"></i>
+          </div>
+          <div class="text-3xl font-extrabold text-white" id="statAll">0</div>
+        </div>
+
+        <div class="bg-[#121212] border border-amber-900/30 rounded-2xl p-5 shadow-lg">
+          <div class="flex justify-between items-center text-amber-400/90 text-xs mb-2">
+            <span>Pending Review</span>
+            <i class="far fa-clock text-amber-500"></i>
+          </div>
+          <div class="text-3xl font-extrabold text-amber-300" id="statPending">0</div>
+        </div>
+
+        <div class="bg-[#121212] border border-cyan-900/30 rounded-2xl p-5 shadow-lg">
+          <div class="flex justify-between items-center text-cyan-400/90 text-xs mb-2">
+            <span>In Progress</span>
+            <i class="fas fa-pencil-alt text-cyan-500"></i>
+          </div>
+          <div class="text-3xl font-extrabold text-cyan-300" id="statInProgress">0</div>
+        </div>
+
+        <div class="bg-[#121212] border border-emerald-900/30 rounded-2xl p-5 shadow-lg">
+          <div class="flex justify-between items-center text-emerald-400/90 text-xs mb-2">
+            <span>Completed</span>
+            <i class="fas fa-check-double text-emerald-500"></i>
+          </div>
+          <div class="text-3xl font-extrabold text-emerald-300" id="statCompleted">0</div>
+        </div>
+
+      </div>
+
+      <!-- Action Toolbar (Filters, Search, Refresh) -->
+      <div class="bg-[#111111] border border-white/10 rounded-2xl p-4 flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4">
+        
+        <!-- Status Filter Tabs -->
+        <div class="flex flex-wrap gap-1.5" id="statusFilterTabs">
+          <button data-status="All" class="status-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white text-black transition">
+            All (<span id="tabCountAll">0</span>)
+          </button>
+          <button data-status="Pending" class="status-tab px-3.5 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition">
+            Pending
+          </button>
+          <button data-status="In Progress" class="status-tab px-3.5 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition">
+            In Progress
+          </button>
+          <button data-status="Completed" class="status-tab px-3.5 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition">
+            Completed
+          </button>
+          <button data-status="Cancelled" class="status-tab px-3.5 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition">
+            Cancelled
+          </button>
+        </div>
+
+        <!-- Search Bar and Refresh -->
+        <div class="flex items-center gap-3">
+          <div class="relative flex-1 md:w-64">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500 text-xs">
+              <i class="fas fa-search"></i>
+            </span>
+            <input type="text" id="searchInput" placeholder="Search customer, ID, phone..."
+              class="w-full pl-9 pr-3 py-2 rounded-xl bg-black/60 border border-neutral-800 text-white placeholder-neutral-500 text-xs focus:outline-none focus:border-white focus:ring-1 focus:ring-white transition" />
+          </div>
+
+          <button id="refreshBtn" title="Refresh Commission List"
+            class="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 hover:text-white transition flex items-center justify-center">
+            <i class="fas fa-sync-alt text-xs" id="refreshIcon"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Commissions Table Container -->
+      <div class="bg-[#111111] border border-white/10 rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+        
+        <!-- Loading Indicator -->
+        <div id="tableLoading" class="py-16 text-center text-neutral-400 space-y-3">
+          <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent"></div>
+          <p class="text-xs">Loading customer commissions from database...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div id="tableEmpty" class="hidden py-16 text-center text-neutral-400 space-y-3">
+          <div class="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mx-auto text-neutral-500">
+            <i class="far fa-folder-open text-xl"></i>
+          </div>
+          <p class="text-sm font-semibold text-white">No commissions found</p>
+          <p class="text-xs text-neutral-500">When visitors submit a commission request from your website, it will show up here.</p>
+        </div>
+
+        <!-- Table View (Desktop & Tablet) -->
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs" id="commissionsTable">
+            <thead class="bg-black/50 border-b border-white/10 text-neutral-400 uppercase tracking-wider text-[11px]">
+              <tr>
+                <th class="py-3.5 px-4 font-semibold">ID / Date</th>
+                <th class="py-3.5 px-4 font-semibold">Customer</th>
+                <th class="py-3.5 px-4 font-semibold">Artwork Specs</th>
+                <th class="py-3.5 px-4 font-semibold text-center">Reference Photo</th>
+                <th class="py-3.5 px-4 font-semibold">Status</th>
+                <th class="py-3.5 px-4 font-semibold text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="commissionsTbody" class="divide-y divide-white/5 text-neutral-200">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 3. COMMISSION DETAIL & IMAGE MODAL -->
+  <!-- ============================================================== -->
+  <div id="detailModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-[#141414] border border-white/15 rounded-2xl p-6 sm:p-8 shadow-[0_30px_90px_rgba(0,0,0,0.95)] max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-start border-b border-white/10 pb-4 mb-5">
+        <div>
+          <span class="font-mono text-xs text-neutral-400 bg-white/5 px-2.5 py-1 rounded border border-white/10" id="modalCommissionId">ART-0000-00000</span>
+          <h3 class="text-lg font-bold text-white mt-2" id="modalCustomerName">Customer Details</h3>
+          <p class="text-xs text-neutral-400" id="modalDate">Submitted on ...</p>
+        </div>
+        <button id="closeModalBtn" class="text-neutral-400 hover:text-white p-2 rounded-lg hover:bg-white/5 transition">
+          <i class="fas fa-times text-base"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="space-y-6">
+        
+        <!-- Contact Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 bg-black/40 p-4 rounded-xl border border-white/5 text-xs">
+          <div>
+            <span class="text-neutral-500 uppercase tracking-wider text-[10px] block">Email Address</span>
+            <a href="#" id="modalEmailLink" class="text-white hover:underline font-medium break-all mt-0.5 inline-block"></a>
+          </div>
+          <div>
+            <span class="text-neutral-500 uppercase tracking-wider text-[10px] block">Mobile / Phone</span>
+            <a href="#" id="modalPhoneLink" class="text-white hover:underline font-medium mt-0.5 inline-block"></a>
+          </div>
+          <div>
+            <span class="text-neutral-500 uppercase tracking-wider text-[10px] block">Portrait Size</span>
+            <span id="modalSize" class="text-white font-medium mt-0.5 inline-block"></span>
+          </div>
+          <div>
+            <span class="text-neutral-500 uppercase tracking-wider text-[10px] block">Drawing Type</span>
+            <span id="modalType" class="text-white font-medium mt-0.5 inline-block"></span>
+          </div>
+        </div>
+
+        <!-- Reference Photo Container -->
+        <div>
+          <span class="text-neutral-400 uppercase tracking-wider text-[11px] font-semibold block mb-2">
+            Customer Reference Photo
+          </span>
+          <div id="modalPhotoContainer" class="rounded-xl border border-white/10 bg-black/60 p-3 text-center overflow-hidden">
+            <img id="modalPhotoImage" src="" alt="Reference Photo" class="max-h-72 mx-auto rounded-lg object-contain" />
+            <div class="mt-3 flex justify-center gap-3">
+              <a id="modalPhotoOpenLink" href="#" target="_blank" class="text-xs bg-white text-black px-4 py-2 rounded-full font-semibold hover:bg-neutral-200 transition inline-flex items-center gap-1.5">
+                <i class="fas fa-external-link-alt text-[10px]"></i> View Full Resolution
+              </a>
+            </div>
+          </div>
+          <div id="modalNoPhoto" class="hidden rounded-xl border border-dashed border-neutral-800 p-6 text-center text-neutral-500 text-xs">
+            <i class="fas fa-image text-2xl mb-1 block"></i>
+            No reference photo was attached with this request.
+          </div>
+        </div>
+
+        <!-- Description / Special Instructions -->
+        <div>
+          <span class="text-neutral-400 uppercase tracking-wider text-[11px] font-semibold block mb-2">
+            Description & Instructions
+          </span>
+          <div class="p-4 rounded-xl bg-black/40 border border-white/5 text-xs text-neutral-300 leading-relaxed whitespace-pre-wrap" id="modalDescription">
+            None provided.
+          </div>
+        </div>
+
+        <!-- Admin Controls: Status & Notes -->
+        <div class="border-t border-white/10 pt-5 space-y-4">
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+              Update Commission Status
+            </label>
+            <select id="modalStatusSelect" class="w-full p-3 rounded-xl bg-black/60 border border-neutral-700 text-white text-xs focus:outline-none focus:border-white transition cursor-pointer">
+              <option value="Pending">Pending (New Request)</option>
+              <option value="In Progress">In Progress (Work in progress)</option>
+              <option value="Completed">Completed (Artwork finished / delivered)</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold uppercase tracking-wider text-neutral-400 mb-2">
+              Admin Private Notes (Optional)
+            </label>
+            <textarea id="modalAdminNotes" rows="2" placeholder="Private internal notes regarding price quoted, delivery date, customer communication..."
+              class="w-full p-3 rounded-xl bg-black/60 border border-neutral-700 text-white placeholder-neutral-600 text-xs focus:outline-none focus:border-white transition"></textarea>
+          </div>
+
+          <div class="flex justify-between items-center pt-2">
+            <button id="modalDeleteBtn" type="button" class="text-xs text-red-400 hover:text-red-300 px-3 py-2 rounded-lg border border-red-900/40 hover:bg-red-950/40 transition flex items-center gap-1.5">
+              <i class="far fa-trash-alt"></i> Delete Commission
+            </button>
+            <button id="modalSaveBtn" type="button" class="text-xs bg-white text-black font-bold px-5 py-2.5 rounded-full hover:bg-neutral-200 transition shadow flex items-center gap-1.5">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 4. DELETE CONFIRMATION MODAL -->
+  <!-- ============================================================== -->
+  <div id="deleteModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm">
+    <div class="w-full max-w-sm bg-[#161616] border border-red-900/50 rounded-2xl p-6 shadow-2xl space-y-4 text-center">
+      <div class="w-12 h-12 rounded-full bg-red-950/60 border border-red-800 text-red-400 flex items-center justify-center mx-auto text-xl">
+        <i class="fas fa-trash-alt"></i>
+      </div>
+      <h4 class="text-base font-bold text-white">Delete Commission?</h4>
+      <p class="text-xs text-neutral-400">
+        Are you sure you want to permanently delete this commission and its Cloudinary reference photo? This action cannot be undone.
+      </p>
+      <div class="flex justify-center gap-3 pt-2">
+        <button id="cancelDeleteBtn" class="px-4 py-2 rounded-xl text-xs bg-neutral-800 hover:bg-neutral-700 text-neutral-200 transition">
+          Cancel
+        </button>
+        <button id="confirmDeleteBtn" class="px-4 py-2 rounded-xl text-xs bg-red-600 hover:bg-red-500 text-white font-semibold transition">
+          Yes, Delete Permanently
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 5. CLIENT APPLICATION JAVASCRIPT -->
+  <!-- ============================================================== -->
+  <script>
+    const TOKEN_KEY = "aldrin_admin_token";
+    let currentCommissions = [];
+    let currentFilterStatus = "All";
+    let selectedCommission = null;
+    let commissionToDeleteId = null;
+
+    // Elements
+    const loginView = document.getElementById("loginView");
+    const dashboardView = document.getElementById("dashboardView");
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
+    const loginErrorText = document.getElementById("loginErrorText");
+    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+    const loginSpinner = document.getElementById("loginSpinner");
+    const loginBtnText = document.getElementById("loginBtnText");
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    const statAll = document.getElementById("statAll");
+    const statPending = document.getElementById("statPending");
+    const statInProgress = document.getElementById("statInProgress");
+    const statCompleted = document.getElementById("statCompleted");
+    const tabCountAll = document.getElementById("tabCountAll");
+
+    const commissionsTable = document.getElementById("commissionsTable");
+    const commissionsTbody = document.getElementById("commissionsTbody");
+    const tableLoading = document.getElementById("tableLoading");
+    const tableEmpty = document.getElementById("tableEmpty");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const refreshIcon = document.getElementById("refreshIcon");
+    const searchInput = document.getElementById("searchInput");
+    const statusTabs = document.querySelectorAll(".status-tab");
+
+    // Detail Modal Elements
+    const detailModal = document.getElementById("detailModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const modalCommissionId = document.getElementById("modalCommissionId");
+    const modalCustomerName = document.getElementById("modalCustomerName");
+    const modalDate = document.getElementById("modalDate");
+    const modalEmailLink = document.getElementById("modalEmailLink");
+    const modalPhoneLink = document.getElementById("modalPhoneLink");
+    const modalSize = document.getElementById("modalSize");
+    const modalType = document.getElementById("modalType");
+    const modalPhotoContainer = document.getElementById("modalPhotoContainer");
+    const modalPhotoImage = document.getElementById("modalPhotoImage");
+    const modalPhotoOpenLink = document.getElementById("modalPhotoOpenLink");
+    const modalNoPhoto = document.getElementById("modalNoPhoto");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalStatusSelect = document.getElementById("modalStatusSelect");
+    const modalAdminNotes = document.getElementById("modalAdminNotes");
+    const modalSaveBtn = document.getElementById("modalSaveBtn");
+    const modalDeleteBtn = document.getElementById("modalDeleteBtn");
+
+    // Delete Modal Elements
+    const deleteModal = document.getElementById("deleteModal");
+    const cancelDeleteBtn = document.getElementById("cancelDeleteBtn");
+    const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+
+    // Toggle Password Visibility
+    const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+    const passwordInput = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+    if (togglePasswordBtn) {
+      togglePasswordBtn.addEventListener("click", () => {
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+      });
+    }
+
+    // Helper: Get JWT token
+    const getToken = () => localStorage.getItem(TOKEN_KEY);
+
+    // Helper: Status badge generator
+    function getStatusBadge(status) {
+      switch (status) {
+        case "Pending":
+          return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-950/70 text-amber-300 border border-amber-800/60"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Pending</span>`;
+        case "In Progress":
+          return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-cyan-950/70 text-cyan-300 border border-cyan-800/60"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> In Progress</span>`;
+        case "Completed":
+          return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-950/70 text-emerald-300 border border-emerald-800/60"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Completed</span>`;
+        case "Cancelled":
+          return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-red-950/70 text-red-300 border border-red-800/60"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span> Cancelled</span>`;
+        default:
+          return `<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] bg-neutral-800 text-neutral-300">${status}</span>`;
+      }
+    }
+
+    // Check Auth on Page Load
+    async function checkAuth() {
+      const token = getToken();
+      if (!token) {
+        showLoginView();
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/admin/me", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (res.ok) {
+          showDashboardView();
+          loadCommissions();
+        } else {
+          localStorage.removeItem(TOKEN_KEY);
+          showLoginView();
+        }
+      } catch (err) {
+        console.warn("Auth check failed:", err);
+        showLoginView();
+      }
+    }
+
+    function showLoginView() {
+      loginView.classList.remove("hidden");
+      dashboardView.classList.add("hidden");
+    }
+
+    function showDashboardView() {
+      loginView.classList.add("hidden");
+      dashboardView.classList.remove("hidden");
+    }
+
+    // Handle Login Submit
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loginError.classList.add("hidden");
+      loginSubmitBtn.disabled = true;
+      loginBtnText.textContent = "Authenticating...";
+      loginSpinner.classList.remove("hidden");
+
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const response = await fetch("/api/admin/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success && data.token) {
+          localStorage.setItem(TOKEN_KEY, data.token);
+          showDashboardView();
+          loadCommissions();
+        } else {
+          loginError.classList.remove("hidden");
+          loginErrorText.textContent = data.message || "Invalid credentials.";
+        }
+      } catch (err) {
+        loginError.classList.remove("hidden");
+        loginErrorText.textContent = "Unable to connect to the server. Please verify backend is running.";
+      } finally {
+        loginSubmitBtn.disabled = false;
+        loginBtnText.textContent = "Sign In to Dashboard";
+        loginSpinner.classList.add("hidden");
+      }
+    });
+
+    // Handle Logout
+    logoutBtn.addEventListener("click", () => {
+      localStorage.removeItem(TOKEN_KEY);
+      showLoginView();
+    });
+
+    // Load Commissions from API
+    async function loadCommissions() {
+      const token = getToken();
+      if (!token) return;
+
+      tableLoading.classList.remove("hidden");
+      tableEmpty.classList.add("hidden");
+      commissionsTbody.innerHTML = "";
+      refreshIcon.classList.add("fa-spin");
+
+      try {
+        const query = currentFilterStatus !== "All" ? `?status=${encodeURIComponent(currentFilterStatus)}` : "";
+        const response = await fetch(`/api/commissions${query}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (response.status === 401) {
+          localStorage.removeItem(TOKEN_KEY);
+          showLoginView();
+          return;
+        }
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          currentCommissions = data.commissions || [];
+          
+          // Update Stats
+          if (data.counts) {
+            statAll.textContent = data.counts.all || 0;
+            statPending.textContent = data.counts.pending || 0;
+            statInProgress.textContent = data.counts.inProgress || 0;
+            statCompleted.textContent = data.counts.completed || 0;
+            tabCountAll.textContent = data.counts.all || 0;
+          }
+
+          renderTable();
+        } else {
+          console.error("Failed to load commissions:", data.message);
+        }
+      } catch (err) {
+        console.error("Error fetching commissions:", err);
+      } finally {
+        tableLoading.classList.add("hidden");
+        refreshIcon.classList.remove("fa-spin");
+      }
+    }
+
+    // Render Table based on filter and search
+    function renderTable() {
+      const searchTerm = searchInput.value.toLowerCase().trim();
+      const filtered = currentCommissions.filter(c => {
+        const matchesSearch = !searchTerm ||
+          (c.name && c.name.toLowerCase().includes(searchTerm)) ||
+          (c.email && c.email.toLowerCase().includes(searchTerm)) ||
+          (c.phone && c.phone.toLowerCase().includes(searchTerm)) ||
+          (c.commissionId && c.commissionId.toLowerCase().includes(searchTerm));
+        return matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        commissionsTbody.innerHTML = "";
+        tableEmpty.classList.remove("hidden");
+        return;
+      }
+
+      tableEmpty.classList.add("hidden");
+      commissionsTbody.innerHTML = filtered.map(c => {
+        const dateStr = new Date(c.createdAt).toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric"
+        });
+
+        const photoHtml = c.referenceImageUrl
+          ? `<img src="${c.referenceImageUrl}" alt="Ref" class="w-10 h-10 rounded-lg object-cover mx-auto border border-neutral-700 cursor-pointer hover:scale-110 transition shadow-sm" onclick="openDetails('${c._id}')" />`
+          : `<span class="text-neutral-600 text-[11px] italic">No image</span>`;
+
+        return `
+          <tr class="hover:bg-white/[0.02] transition">
+            <td class="py-3 px-4">
+              <span class="font-mono font-semibold text-white block">${c.commissionId || c._id.slice(-6)}</span>
+              <span class="text-neutral-500 text-[10px]">${dateStr}</span>
+            </td>
+            <td class="py-3 px-4">
+              <span class="font-medium text-white block">${escapeHtml(c.name)}</span>
+              <div class="flex items-center gap-2 text-[11px] text-neutral-400 mt-0.5">
+                <a href="mailto:${escapeHtml(c.email)}" class="hover:text-white transition underline-offset-2 hover:underline"><i class="far fa-envelope mr-1 text-[10px]"></i>${escapeHtml(c.email)}</a>
+                <span>•</span>
+                <a href="tel:${escapeHtml(c.phone)}" class="hover:text-white transition"><i class="fas fa-phone mr-1 text-[10px]"></i>${escapeHtml(c.phone)}</a>
+              </div>
+            </td>
+            <td class="py-3 px-4">
+              <span class="text-neutral-300 font-medium block">${escapeHtml(c.size)}</span>
+              <span class="text-neutral-500 text-[11px]">${escapeHtml(c.type)}</span>
+            </td>
+            <td class="py-3 px-4 text-center">
+              ${photoHtml}
+            </td>
+            <td class="py-3 px-4">
+              ${getStatusBadge(c.status)}
+            </td>
+            <td class="py-3 px-4 text-right">
+              <div class="flex items-center justify-end gap-2">
+                <button onclick="openDetails('${c._id}')" class="px-2.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-neutral-200 hover:text-white border border-white/10 transition text-[11px]">
+                  <i class="far fa-eye mr-1"></i> Details
+                </button>
+                <button onclick="confirmDelete('${c._id}')" class="p-1.5 rounded-lg text-neutral-500 hover:text-red-400 hover:bg-red-950/40 transition text-xs" title="Delete">
+                  <i class="far fa-trash-alt"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    // Open Details Modal
+    window.openDetails = function (id) {
+      selectedCommission = currentCommissions.find(c => c._id === id);
+      if (!selectedCommission) return;
+
+      modalCommissionId.textContent = selectedCommission.commissionId || selectedCommission._id;
+      modalCustomerName.textContent = selectedCommission.name;
+      modalDate.textContent = `Submitted on ${new Date(selectedCommission.createdAt).toLocaleString("en-IN")}`;
+      
+      modalEmailLink.textContent = selectedCommission.email;
+      modalEmailLink.href = `mailto:${selectedCommission.email}`;
+
+      modalPhoneLink.textContent = selectedCommission.phone;
+      modalPhoneLink.href = `tel:${selectedCommission.phone}`;
+
+      modalSize.textContent = selectedCommission.size;
+      modalType.textContent = selectedCommission.type;
+
+      modalDescription.textContent = selectedCommission.description || "No special requests or instructions provided.";
+      modalStatusSelect.value = selectedCommission.status || "Pending";
+      modalAdminNotes.value = selectedCommission.adminNotes || "";
+
+      // Reference Photo
+      if (selectedCommission.referenceImageUrl) {
+        modalPhotoImage.src = selectedCommission.referenceImageUrl;
+        modalPhotoOpenLink.href = selectedCommission.referenceImageUrl;
+        modalPhotoContainer.classList.remove("hidden");
+        modalNoPhoto.classList.add("hidden");
+      } else {
+        modalPhotoContainer.classList.add("hidden");
+        modalNoPhoto.classList.remove("hidden");
+      }
+
+      detailModal.classList.remove("hidden");
+    };
+
+    // Close Details Modal
+    closeModalBtn.addEventListener("click", () => {
+      detailModal.classList.add("hidden");
+      selectedCommission = null;
+    });
+
+    // Save Status & Admin Notes from Modal
+    modalSaveBtn.addEventListener("click", async () => {
+      if (!selectedCommission) return;
+
+      const newStatus = modalStatusSelect.value;
+      const newNotes = modalAdminNotes.value;
+      const token = getToken();
+
+      modalSaveBtn.disabled = true;
+      modalSaveBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Saving...`;
+
+      try {
+        const response = await fetch(`/api/commissions/${selectedCommission._id}/status`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            status: newStatus,
+            adminNotes: newNotes
+          })
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+          detailModal.classList.add("hidden");
+          await loadCommissions();
+        } else {
+          alert(`Failed to update status: ${data.message || "Unknown error"}`);
+        }
+      } catch (err) {
+        alert("Network error while updating commission status.");
+      } finally {
+        modalSaveBtn.disabled = false;
+        modalSaveBtn.innerHTML = `<i class="fas fa-save mr-1"></i> Save Changes`;
+      }
+    });
+
+    // Modal Delete Button trigger
+    modalDeleteBtn.addEventListener("click", () => {
+      if (!selectedCommission) return;
+      detailModal.classList.add("hidden");
+      confirmDelete(selectedCommission._id);
+    });
+
+    // Delete Confirmation flow
+    window.confirmDelete = function (id) {
+      commissionToDeleteId = id;
+      deleteModal.classList.remove("hidden");
+    };
+
+    cancelDeleteBtn.addEventListener("click", () => {
+      deleteModal.classList.add("hidden");
+      commissionToDeleteId = null;
+    });
+
+    confirmDeleteBtn.addEventListener("click", async () => {
+      if (!commissionToDeleteId) return;
+
+      const token = getToken();
+      confirmDeleteBtn.disabled = true;
+      confirmDeleteBtn.textContent = "Deleting...";
+
+      try {
+        const response = await fetch(`/api/commissions/${commissionToDeleteId}`, {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        const data = await response.json();
+        if (response.ok && data.success) {
+          deleteModal.classList.add("hidden");
+          commissionToDeleteId = null;
+          await loadCommissions();
+        } else {
+          alert(`Failed to delete commission: ${data.message || "Unknown error"}`);
+        }
+      } catch (err) {
+        alert("Network error while deleting commission.");
+      } finally {
+        confirmDeleteBtn.disabled = false;
+        confirmDeleteBtn.textContent = "Yes, Delete Permanently";
+      }
+    });
+
+    // Status Filter Tabs click
+    statusTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        statusTabs.forEach(t => {
+          t.className = "status-tab px-3.5 py-1.5 rounded-xl text-xs font-medium text-neutral-400 hover:text-white hover:bg-white/5 transition";
+        });
+        tab.className = "status-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-white text-black transition";
+        currentFilterStatus = tab.getAttribute("data-status");
+        loadCommissions();
+      });
+    });
+
+    // Search Input listener
+    searchInput.addEventListener("input", renderTable);
+
+    // Refresh Button listener
+    refreshBtn.addEventListener("click", loadCommissions);
+
+    // Escape helper
+    function escapeHtml(str) {
+      if (!str) return "";
+      return String(str)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    // Init check
+    checkAuth();
+  </script>
+
+</body>
+</html>
