@@ -105,15 +105,17 @@ app.all('/api/*', (req, res) => {
 // Centralized Error Handling Middleware
 app.use(errorHandler);
 
-// Start HTTP Server
-const server = app.listen(PORT, () => {
-  console.log(`\n======================================================`);
-  console.log(`🎨 Aldrin Art Server is running on port ${PORT}`);
-  console.log(`🌐 Website URL: http://localhost:${PORT}`);
-  console.log(`🔒 Admin Dashboard: http://localhost:${PORT}/admin`);
-  console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
-  console.log(`======================================================\n`);
-});
+// Start HTTP Server only in traditional server environments (not in Vercel serverless)
+if (process.env.NODE_ENV !== 'test' && !process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`\n======================================================`);
+    console.log(`🎨 Aldrin Art Server is running on port ${PORT}`);
+    console.log(`🌐 Website URL: http://localhost:${PORT}`);
+    console.log(`🔒 Admin Dashboard: http://localhost:${PORT}/admin`);
+    console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
+    console.log(`======================================================\n`);
+  });
+}
 
 // Handle unhandled Promise rejections
 process.on('unhandledRejection', (err) => {
